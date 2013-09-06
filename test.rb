@@ -1,4 +1,4 @@
-require "./stringcalc.rb"
+require_relative "./stringcalc.rb"
 require 'test/unit'
   
 
