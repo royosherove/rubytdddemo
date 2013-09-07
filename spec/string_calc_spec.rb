@@ -6,13 +6,16 @@ describe StringCalculator do
 
   describe "Adding" do
     def make_calc
-      StringCalculator.new
+      stub = double("stublogger")
+      allow(stub).to receive(:write)
+      StringCalculator.new(stub)
     end
 
     context "given a logger attached" do
       it "calls the logger" do
         logger = double("logger")
         allow(logger).to receive(:write)
+
         StringCalculator.new(logger).add("")
 
         expect(logger).to have_received(:write)

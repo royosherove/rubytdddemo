@@ -1,12 +1,14 @@
 class StringCalculator
   attr_accessor :last_sum
-  def initialize(logger=nil)
+  def initialize(thelogger)
     @last_sum = 0
+    @logger = thelogger
   end
 
   def add(numbers)
     raise "only positives please!" if numbers.include?("-")
     @last_sum = calculate(numbers)
+    @logger.write("got #{@last_sum}")
     @last_sum
   end
 
