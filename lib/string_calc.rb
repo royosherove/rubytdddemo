@@ -1,6 +1,6 @@
 class StringCalculator
   attr_accessor :last_sum
-  def initialize()
+  def initialize(logger=nil)
     @last_sum = 0
   end
 

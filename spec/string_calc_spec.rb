@@ -1,5 +1,5 @@
 require 'rspec'
-require 'rspec-expectations'
+require 'rspec/mocks'
 require_relative '../lib/string_calc.rb'
 
 describe StringCalculator do
@@ -7,6 +7,16 @@ describe StringCalculator do
   describe "Adding" do
     def make_calc
       StringCalculator.new
+    end
+
+    context "given a logger attached" do
+      it "calls the logger" do
+        logger = double("logger")
+        StringCalculator.new(logger).add("")
+
+        expect(logger).to 
+          have_received(:write)
+      end
     end
 
     context "negative numbers" do
