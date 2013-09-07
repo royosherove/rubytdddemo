@@ -1,5 +1,5 @@
 require 'rspec'
-require_relative '../stringcalc.rb'
+require_relative '../string_calc.rb'
 
 describe StringCalculator do
 
@@ -19,6 +19,14 @@ describe StringCalculator do
         @calc = make_calc
         expect "1",1
       end
+    end
+
+    context "multiple numbers" do
+      it "handles two numbers" do
+        @calc = make_calc
+        expect "1,2",3
+      end
+
     end
 
     def expect(input,expected)
