@@ -1,28 +1,32 @@
 require 'rspec'
+require 'rspec-expectations'
 require_relative '../lib/string_calc.rb'
 
 describe StringCalculator do
 
-  describe "add" do
+  describe "Adding" do
     def make_calc
       StringCalculator.new
     end
 
-    context "single number" do
-
-      it "throws if th number is negative" do
-        lambda {make_calc.add("-1")}.should raise_error
+    context "negative numbers" do
+        it "throws for single number" do
+          expect { make_calc.add("-1") }.to raise_error
       end
+    end
+    context "a single number" do
 
-      it "returns the same number for a single number2" do
-        @calc = make_calc
-        expect "2",2
-      end
+          it "returns the same number" do
+            @calc = make_calc
+            expect "2",2
+          end
 
-      it "returns the same number for a single number" do
-        @calc = make_calc
-        expect "1",1
-      end
+          it "returns the same number2" do
+            @calc = make_calc
+            expect "1",1
+          end
+
+
     end
 
     context "multiple numbers" do
@@ -54,9 +58,12 @@ describe StringCalculator do
     end
 
 
-    it "returns the default value for an empty input" do
-      @calc = make_calc
-      @calc.add("").should == 0
+    context "an empty value" do
+
+      it "returns the default value" do
+        @calc = make_calc
+        @calc.add("").should == 0
+      end
     end
   end
 end
