@@ -7,13 +7,14 @@ guard 'cucumber' do
   watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'features' }
 end
 
-guard :rspec, :spec_paths => ["spec"]  do
-  watch(%r{^spec/.+\.rb$})
-  watch(%r{^\./.+?\.rb$})     { |m| "spec/#{m[1]}_spec.rb"  }
 
 
-  # Capybara features specs
-  watch(%r{^app/views/(.+)/.*\.(erb|haml)$})          { |m| "spec/features/#{m[1]}_spec.rb" }
+guard :rspec do
+  watch(%r{^spec/.+_spec\.rb$})
+  watch(%r{^lib/(.+)\.rb$})     { |m| "spec/#{m[1]}_spec.rb" }
+  watch('spec/spec_helper.rb')  { "spec" }
 
 end
+
+
 
