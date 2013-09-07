@@ -5,6 +5,7 @@ class StringCalculator
   end
 
   def add(numbers)
+    raise "only positives please!" if numbers.include?("-")
     @last_sum = calculate(numbers)
     @last_sum
   end

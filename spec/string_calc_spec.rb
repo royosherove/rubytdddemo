@@ -10,6 +10,10 @@ describe StringCalculator do
 
     context "single number" do
 
+      it "throws if th number is negative" do
+        lambda {make_calc.add("-1")}.should raise_error
+      end
+
       it "returns the same number for a single number2" do
         @calc = make_calc
         expect "2",2
