@@ -10,10 +10,19 @@ describe StringCalculator do
     end
 
     context "negative numbers" do
-        it "throws for single number" do
-          expect { make_calc.add("-1") }.to raise_error
-      end
+          it "throws for single number" do
+            lambda { make_calc.add("-1") }.should raise_error
+          end
+
+          it "throws for single number within other numbers" do
+            lambda { make_calc.add("-1,2") }.should raise_error
+          end
+
+          it "throws for several negatives" do
+            lambda { make_calc.add("1,-1,-2") }.should raise_error
+          end
     end
+
     context "a single number" do
 
           it "returns the same number" do
@@ -41,7 +50,7 @@ describe StringCalculator do
 
     end
 
-    context "last_sum" do
+    describe "remembers last sum" do
       it "returns the last sum form last operation made" do
         @calc = make_calc
         @calc.add "1"
