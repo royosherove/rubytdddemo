@@ -12,20 +12,20 @@ describe StringCalculator do
     context "given a logger attached" do
       it "calls the logger" do
         logger = double("logger")
+        allow(logger).to receive(:write)
         StringCalculator.new(logger).add("")
 
-        expect(logger).to 
-          have_received(:write)
+        expect(logger).to have_received(:write)
       end
     end
 
     context "negative numbers" do
           it "throws for single number" do
-            lambda { make_calc.add("-1") }.should raise_error
+            expect { make_calc.add("-1") }.to raise_error
           end
 
           it "throws for single number within other numbers" do
-            lambda { make_calc.add("-1,2") }.should raise_error
+            expect { make_calc.add("-1,2") }.to raise_error
           end
 
           it "throws for several negatives" do
@@ -37,12 +37,12 @@ describe StringCalculator do
 
           it "returns the same number" do
             @calc = make_calc
-            expect "2",2
+            expect_that "2",2
           end
 
           it "returns the same number2" do
             @calc = make_calc
-            expect "1",1
+            expect_that "1",1
           end
 
 
@@ -51,11 +51,11 @@ describe StringCalculator do
     context "multiple numbers" do
       it "handles two numbers" do
         @calc = make_calc
-        expect "1,2",3
+        expect_that "1,2",3
       end
       it "handles three numbers" do
         @calc = make_calc
-        expect "1,2,3",6
+        expect_that "1,2,3",6
       end
 
     end
@@ -72,7 +72,7 @@ describe StringCalculator do
       end
     end
 
-    def expect(input,expected)
+    def expect_that(input,expected)
       @calc.add(input).should == expected
     end
 
