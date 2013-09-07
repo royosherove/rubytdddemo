@@ -14,6 +14,9 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = 'random'
+  #config.mock_with MultiMock::Adapter.for(:rspec, :mocha, :rr, :not_a_mock, ::NewMockFramework::RSpecAdapter)
+
+
 
 end
 
