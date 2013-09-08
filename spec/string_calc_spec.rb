@@ -7,9 +7,7 @@ describe StringCalculator do
 
   describe "Adding" do
     def make_calc
-      stublog = fake(:slow_logger)
-      stubws = fake(:web_service)
-      StringCalculator.new(stublog,stubws)
+      StringCalculator.new
     end
 
 

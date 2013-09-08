@@ -1,6 +1,10 @@
 class StringCalculator
   attr_accessor :last_sum
 
+  def initialize
+    @last_sum = 0
+  end
+
   def add(numbers)
     raise "only positives please!" if numbers.include?("-")
     @last_sum = calculate(numbers)
