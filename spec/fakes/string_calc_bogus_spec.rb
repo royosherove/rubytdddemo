@@ -13,15 +13,37 @@ describe StringCalculatorOneDep do
         logger = fake(:slow_logger)
         fakews = fake(:web_service)
 
-        StringCalculatorOneDep.new(logger,fakews).add("")
+        StringCalculatorOneDep.new(logger,fakews).add("1")
 
-        logger.should have_received.write("got 0")
+        logger.should have_received.write(with {|text| text.include?("got 1")})
       end
     end
 
 
   end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 describe StringCalculatorTwoDeps do
 
@@ -34,7 +56,7 @@ describe StringCalculatorTwoDeps do
 
         StringCalculatorTwoDeps.new(logger,fakews).add("")
 
-        logger.should have_received.write("got 0")
+        logger.should have_received.write(with {|text| text.include?("got 0")})
       end
     end
 
@@ -47,7 +69,7 @@ describe StringCalculatorTwoDeps do
 
           StringCalculatorTwoDeps.new(logger,fakews).add("")
 
-          fakews.should have_received.notify("logger threw up")
+          fakews.should have_received.notify(with {|s| s.include?("logger threw up")})
 
         end
       end
