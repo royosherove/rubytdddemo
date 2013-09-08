@@ -1,23 +1,17 @@
 require 'bogus/rspec'
+require_relative '../lib/web_service.rb'
+require_relative '../lib/slow_logger.rb'
 require_relative '../lib/string_calc.rb'
 
 describe StringCalculator do
 
   describe "Adding" do
     def make_calc
-      stub = fake(:slow_logger)
-      StringCalculator.new(stub)
+      stublog = fake(:slow_logger)
+      stubws = fake(:web_service)
+      StringCalculator.new(stublog,stubws)
     end
 
-    context "given a logger attached" do
-      it "calls the logger" do
-        logger = fake(:slow_logger)
-
-        StringCalculator.new(logger).add("")
-
-        logger.should have_received.write("got 0")
-      end
-    end
 
     context "negative numbers" do
           it "throws for single number" do
