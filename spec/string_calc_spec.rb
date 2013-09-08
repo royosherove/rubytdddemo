@@ -1,4 +1,3 @@
-require_relative '../lib/slow_logger.rb'
 require 'bogus/rspec'
 require_relative '../lib/string_calc.rb'
 

@@ -34,7 +34,10 @@ GEM
       rb-inotify (>= 0.9)
       rb-kqueue (>= 0.2)
     lumberjack (1.0.4)
+    metaclass (0.0.1)
     method_source (0.8.2)
+    mocha (0.14.0)
+      metaclass (~> 0.0.1)
     multi_json (1.7.9)
     multi_test (0.0.2)
     pry (0.9.12.2)
@@ -66,4 +69,5 @@ DEPENDENCIES
   guard
   guard-cucumber
   guard-rspec
+  mocha
   rspec
