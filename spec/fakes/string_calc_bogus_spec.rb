@@ -4,9 +4,27 @@ require_relative '../../lib/slow_logger.rb'
 require_relative '../../lib/string_calc_twodeps.rb'
 require_relative '../../lib/string_calc_onedep.rb'
 
+class FakeSlowLogger
+  attr_accessor :numbers
+  def write(numbers)
+    @numbers = numbers
+  end
+end
+
 describe StringCalculatorOneDep do
 
   describe "Adding" do
+
+    context "given a logger attached hand written" do
+      it "calls the logger faked with bogus" do
+        logger = FakeSlowLogger.new
+        fakews = fake(:web_service)
+
+        StringCalculatorOneDep.new(logger,fakews).add("1")
+
+        logger.numbers.should == "got 1"
+      end
+    end
 
     context "given a logger attached" do
       it "calls the logger faked with bogus" do

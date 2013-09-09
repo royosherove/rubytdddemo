@@ -12,6 +12,9 @@ describe StringCalculator do
 
 
     context "negative numbers" do
+
+          it "does something really important"
+
           it "throws for single number" do
             expect { make_calc.add("-1") }.to raise_error
           end
