@@ -4,6 +4,7 @@ require_relative '../../lib/slow_logger'
 require_relative '../../lib/string_calc_twodeps'
 require_relative '../../lib/string_calc_onedep'
 require_relative '../../lib/string_calc_with_static'
+require_relative '../../lib/shared_logger'
 
 class FakeSlowLogger
   attr_accessor :numbers
@@ -19,9 +20,8 @@ describe StringCalculatorOneDep do
     context "given a logger attached hand written" do
       it "calls the logger faked with bogus" do
         logger = FakeSlowLogger.new
-        fakews = fake(:web_service)
 
-        StringCalculatorOneDep.new(logger,fakews).add("1")
+        StringCalculatorOneDep.new(logger).add("1")
 
         logger.numbers.should == "got 1"
       end
@@ -32,7 +32,7 @@ describe StringCalculatorOneDep do
         logger = fake(:slow_logger)
         fakews = fake(:web_service)
 
-        StringCalculatorOneDep.new(logger,fakews).add("1")
+        StringCalculatorOneDep.new(logger).add("1")
 
         logger.should have_received.write(with {|text| text.include?("got 1")})
       end
@@ -81,35 +81,19 @@ end
 
 
 
+
 describe StringCalculatorWithStatic do
 
   describe "Adding" do
 
     context "given a logger attached hand written" do
       it "calls the logger faked with bogus" do
-        logger = FakeSlowLogger.new
-        fakews = fake(:web_service)
+        fake_class SharedLogger
 
-        StringCalculatorOneDep.new(logger,fakews).add("1")
+        StringCalculatorWithStatic.new.add("1")
 
-        logger.numbers.should == "got 1"
+        SharedLogger.should have_received.write("got 1")
       end
     end
-
-    context "given a logger attached" do
-      it "calls the logger faked with bogus" do
-        logger = fake(:slow_logger)
-        fakews = fake(:web_service)
-
-        StringCalculatorOneDep.new(logger,fakews).add("1")
-
-        logger.should have_received.write(with {|text| text.include?("got 1")})
-      end
-    end
-
-
   end
 end
-
-
-

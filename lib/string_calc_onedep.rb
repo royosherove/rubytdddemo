@@ -1,9 +1,8 @@
 class StringCalculatorOneDep
   attr_accessor :last_sum
-  def initialize(thelogger,thewebserice)
+  def initialize(thelogger)
     @last_sum = 0
     @logger = thelogger
-    @webservice = thewebserice
   end
 
   def add(numbers)
@@ -14,11 +13,7 @@ class StringCalculatorOneDep
   end
 
   def notify_logger
-    begin
-      @logger.write("got #{@last_sum}")
-    rescue
-      @webservice.notify("logger threw up")
-    end
+    @logger.write("got #{@last_sum}")
   end
 
   def calculate(numbers)
