@@ -1,5 +1,5 @@
 require 'rspec'
-require_relative 'stringcalc.rb'
+require_relative '../lib/string_calc.rb'
 
 
 describe "something" do
