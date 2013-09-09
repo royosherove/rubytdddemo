@@ -1,8 +1,7 @@
-gem 'minitest'
-require 'minitest/autorun'
+require 'test/unit'
 require '../lib/string_calc'
 
-class TestTheCalc< MiniTest::Test
+class TestTheCalc< Test::Unit::TestCase
   def test_add_emptystring_returnsdefaultvalue
     
     result = StringCalculator.new.add("")
