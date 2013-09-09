@@ -60,6 +60,7 @@ GEM
     rspec-mocks (2.14.3)
     slop (3.4.6)
     thor (0.18.1)
+    timecop (0.6.3)
 
 PLATFORMS
   ruby
@@ -73,3 +74,4 @@ DEPENDENCIES
   minitest
   mocha
   rspec
+  timecop

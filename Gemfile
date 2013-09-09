@@ -8,3 +8,4 @@ gem 'mocha', :require => :false
 gem 'guard-rspec'
 gem 'guard-cucumber'
 gem 'bogus'
+gem 'timecop'
