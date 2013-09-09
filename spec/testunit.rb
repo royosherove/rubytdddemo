@@ -24,6 +24,15 @@ describe StringCalculator do
 
     describe "empty string" do
 
+      it "changes the state of the system" do
+        result = StringCalculator.new.add("")
+        result.must_equal 0
+      end
+
+      it "Calls a logger" do
+        result = StringCalculator.new.add("")
+        result.must_equal 0
+      end
       it "returns default value" do
         result = StringCalculator.new.add("")
         result.must_equal 0
