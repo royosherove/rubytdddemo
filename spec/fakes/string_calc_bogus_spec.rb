@@ -7,9 +7,17 @@ require_relative '../../lib/string_calc_with_static'
 require_relative '../../lib/shared_logger'
 
 class FakeSlowLogger
-  attr_accessor :numbers
+  attr_accessor :numbers, :will_throw
   def write(numbers)
     @numbers = numbers
+    raise @will_throw if @will_throw
+  end
+end
+
+class FakeWebService
+  attr_accessor :text
+  def write(text)
+    @text = text
   end
 end
 
@@ -18,12 +26,24 @@ describe StringCalculatorOneDep do
   describe "Adding" do
 
     context "given a logger attached hand written" do
-      it "calls the logger faked with bogus" do
+      it "calls the logger" do
         logger = FakeSlowLogger.new
 
         StringCalculatorOneDep.new(logger).add("1")
 
         logger.numbers.should == "got 1"
+      end
+    end
+
+    context "given a throwing logger and web service" do
+      it "calls the web service " do
+        logger = FakeSlowLogger.new
+        logger.will_throw = "fake error"
+        webservice = FakeWebService.new
+
+        StringCalculatorOneDep.new(logger,webservice).add("1")
+
+        webservice.numbers.should == "got 'fake error'"
       end
     end
 

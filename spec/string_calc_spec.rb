@@ -5,9 +5,45 @@ require_relative '../lib/string_calc.rb'
 
 describe StringCalculator do
 
-  describe "Adding" do
-    let(:calc){StringCalculator.new}
+  class FakeLogger
+    attr_accessor :numbers, :will_throw
+    def write(text)
+      @numbers = text
+      raise @will_throw if @will_throw
+    end
+  end
+  
+  class FakeWebService
+    attr_accessor :text
+    def write(text)
+      @text = text
+    end
+  end
 
+  describe "Adding" do
+    let(:calc){StringCalculator.new(FakeLogger.new, FakeWebService.new)}
+
+    context "with a logger" do
+      it "calls the logger with the sum" do
+        mock_logger = FakeLogger.new
+
+        StringCalculator.new(mock_logger, FakeWebService.new).add("1")
+
+        mock_logger.numbers.should == "got 1"
+      end
+    end
+
+    context "with a logger that throws and a webservice" do
+      it "calls the web service with the logger error" do
+        fakelogger = FakeLogger.new
+        fakelogger.will_throw = "fake error"
+        webservice = FakeWebService.new
+
+        StringCalculator.new(fakelogger, webservice).add("1")
+
+        webservice.text.should == "got 'fake error'"
+      end
+    end
     context "negative numbers" do
 
           it "throws for single number" do
