@@ -87,7 +87,8 @@ describe StringCalculatorTwoDeps do
           logger = fake(write: proc{raise "nooo"})
           fakews = fake(:web_service)
 
-          StringCalculatorTwoDeps.new(logger,fakews).add("")
+          calc = StringCalculatorTwoDeps.new(logger,fakews)
+          calc.add("")
 
           fakews.should have_received.notify(with {|s| s.include?("logger threw up")})
 
