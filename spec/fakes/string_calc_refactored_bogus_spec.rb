@@ -23,7 +23,7 @@ describe StringCalculatorTwoDeps do
     specify { adding("2").should == 2 }
 
     context "with a logger that throws" do
-      let     (:logger)    { fake(:slow_logger, write: proc { raise "BAM" }) }
+      let(:logger){ fake(:slow_logger, write: proc { raise "BAM" }) }
       before  { adding("") }
       subject { webservice }
       it      { should have_received.notify(any_args) }
