@@ -5,104 +5,64 @@ require_relative '../lib/string_calc.rb'
 
 describe StringCalculator do
 
-  class FakeLogger
-    attr_accessor :numbers, :will_throw
-    def write(text)
-      @numbers = text
-      raise @will_throw if @will_throw
-    end
-  end
-  
-  class FakeWebService
-    attr_accessor :text
-    def write(text)
-      @text = text
-    end
-  end
+  subject(:calc) { StringCalculator.new(logger,webservice) }
+  let(:logger) {fake(:slow_logger)}
+  let(:webservice) {fake(:web_service)}
+
 
   describe "Adding" do
-    let(:calc){StringCalculator.new(FakeLogger.new, FakeWebService.new)}
+      def adding(input)
+        calc.add(input)
+      end
 
     context "with a logger" do
       it "calls the logger with the sum" do
-        mock_logger = FakeLogger.new
-
-        StringCalculator.new(mock_logger, FakeWebService.new).add("1")
-
-        mock_logger.numbers.should == "got 1"
+        adding("1")
+        logger.should have_received.write(any_args)
       end
     end
 
     context "with a logger that throws and a webservice" do
+      let(:logger) { fake(:slow_logger, write: proc { raise "BAM" }) }
+
       it "calls the web service with the logger error" do
-        fakelogger = FakeLogger.new
-        fakelogger.will_throw = "fake error"
-        webservice = FakeWebService.new
-
-        StringCalculator.new(fakelogger, webservice).add("1")
-
-        webservice.text.should == "got 'fake error'"
+        calc.add("1")
+        webservice.should have_received.notify(any_args)
       end
     end
+
     context "negative numbers" do
-
-          it "throws for single number" do
-            expect { calc.add("-1") }.to raise_error
-          end
-
-          it "throws for single number within other numbers" do
-            expect { calc.add("-1,2") }.to raise_error
-          end
-
-          it "throws for several negatives" do
-            lambda { calc.add("1,-1,-2") }.should raise_error
-          end
+      specify { expect { adding("-1") }.to raise_error }
+      specify { expect { adding("-1,2") }.to raise_error }
+      specify { expect { adding("-1,-1,-2") }.to raise_error }
     end
 
     context "a single number" do
 
-          it "returns the same number" do
-            expect_that "2",2
-          end
-
-          it "returns the same number2" do
-            expect_that "1",1
-          end
-
+      specify {adding("2").should == 2}
+      specify {adding("1").should == 1}
 
     end
 
     context "multiple numbers" do
-      it "handles two numbers" do
-        expect_that "1,2",3
-      end
-      it "handles three numbers" do
-        expect_that "1,2,3",6
-      end
-
+      specify {adding("1,2").should == 3}
+      specify {adding("1,2,3").should == 6}
     end
 
     describe "remembers last sum" do
-      it "returns the last sum form last operation made" do
-        calc.add "1"
-        calc.last_sum.should == 1
+      def add_and_Get_last_sum(input)
+        calc.add(input)
+        calc.last_sum
       end
 
-      it "returns zero if not operations were made" do
-        calc.last_sum.should == 0
-      end
-    end
-
-    def expect_that(input,expected)
-      calc.add(input).should == expected
+      its {last_sum.should == 0}
+      specify { add_and_Get_last_sum("1").should == 1 }
+      specify { add_and_Get_last_sum("1,2").should == 3 }
     end
 
 
     context "an empty value" do
-
-      it "returns the default value" do
-        calc.add("").should == 0
-      end
-    end
+      specify { adding("").should == 0 }
   end
+end
 end
