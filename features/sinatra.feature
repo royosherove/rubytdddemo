@@ -7,3 +7,5 @@ Feature: using Sinatra with Capybara
         Then I should see the default greeting
 
 
+
+
