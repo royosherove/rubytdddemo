@@ -25,8 +25,9 @@ describe StringCalculatorTwoDeps do
     context "with a logger that throws" do
       let(:logger){ fake(:slow_logger, write: proc { raise "BAM" }) }
       before  { adding("") }
-      subject { webservice }
-      it      { should have_received.notify(any_args) }
+      it "calls the web service" do
+        webservice.should have_received.notify(anything)
+      end
     end
   end
 end

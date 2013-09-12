@@ -5,7 +5,5 @@ Feature: String Calculator Logging
     we will only use HAND WRITTEN mocks (no framework)
 
     Scenario: Adding a number
-        Given  a string calculator
-        And a slow logger instance
         When the string calculator add method is called with input  "1,2"
         Then slow logger should be notified with "got 3"
