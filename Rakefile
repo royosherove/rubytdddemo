@@ -1,6 +1,9 @@
 require 'rake'
-require 'rspec/core/rake_task'
  
-RSpec::Core::RakeTask.new(:spec) 
  
-task :default  => :spec
+task :default  => :run_tests
+
+taks :run_tests do
+
+  `rspec spec/string_calc_refactored_spec.rb`
+end
