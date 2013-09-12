@@ -1,9 +1,7 @@
 require 'rake'
  
- 
-task :default  => :run_tests
-
-task :run_tests do
-
-  `rspec --format doc spec/string_calc_refactored_spec.rb`
+RSpec::Core::RakeTask.new(:spec) do |t|
+    t.rspec_opts = "--tag fast"
 end
+
+task :default  => :rspec
