@@ -55,7 +55,7 @@ describe StringCalculator do
         calc.last_sum
       end
 
-      its {last_sum.should == 0}
+      its(:last_sum) {should == 0}
       specify { add_and_Get_last_sum("1").should == 1 }
       specify { add_and_Get_last_sum("1,2").should == 3 }
     end
