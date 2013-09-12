@@ -18,7 +18,7 @@ class StringCalculator
     begin
     @logger.write("got #{sum}")
     rescue Exception => e
-      @ws.write("got '#{e.message}'")
+      @ws.notify("got '#{e.message}'")
     end
   end
 

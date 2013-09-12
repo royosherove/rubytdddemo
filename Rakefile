@@ -3,7 +3,7 @@ require 'rake'
  
 task :default  => :run_tests
 
-taks :run_tests do
+task :run_tests do
 
-  `rspec spec/string_calc_refactored_spec.rb`
+  `rspec --format doc spec/string_calc_refactored_spec.rb`
 end
