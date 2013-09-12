@@ -1,5 +1,6 @@
 source "http://rubygems.org"
 
+gem 'rake'
 gem 'minitest'
 gem 'rspec'
 gem 'cucumber'
